@@ -38,7 +38,7 @@ fn main() {
     //going into raw mode
     enable_raw_mode().unwrap();
 
-    let ev = read().unwrap();
+    let _ev = read().unwrap();
     print!("\x1b[H{}", manager.render());
     loop {
         let ev = read().unwrap();

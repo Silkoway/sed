@@ -1,13 +1,13 @@
 use crate::global_data::TConfig;
-use std::{collections::HashMap, io::stdout, process, rc::Rc};
+use std::{collections::HashMap, process, rc::Rc};
 use uuid::Uuid;
 
 use super::{
-    tChar::{CharGrid, Color, TChar},
+    tChar::{CharGrid, TChar},
     window::Window,
 };
 
-use crossterm::event::{Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
+use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
 use terminal_size::{terminal_size, Height, Width};
 
 pub struct WindowManager {
@@ -47,9 +47,9 @@ impl WindowManager {
 
         if let Some((Width(w), Height(h))) = size {
             grid.resize_clear(w.into(), h.into());
-            for j in 0..h {
+            for _j in 0..h {
                 let mut v = vec![];
-                for i in 0..w {
+                for _i in 0..w {
                     v.push(0x0000);
                 }
                 connections.push(v);

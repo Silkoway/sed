@@ -1,10 +1,10 @@
-use std::fmt::Debug;
+
 use std::rc::Rc;
 
 use crossterm::event::{Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 
 use crate::global_data::TConfig;
-use crate::wman::tChar::{CharGrid, TChar};
+use crate::wman::tChar::{CharGrid};
 use crate::wman::window::Window;
 
 pub struct HelloWorldWindow {
