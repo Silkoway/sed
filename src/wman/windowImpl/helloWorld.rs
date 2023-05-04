@@ -1,6 +1,7 @@
+use std::fmt::Debug;
 use std::rc::Rc;
 
-use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
+use crossterm::event::{Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 
 use crate::global_data::TConfig;
 use crate::wman::tChar::{CharGrid, TChar};
@@ -12,6 +13,8 @@ pub struct HelloWorldWindow {
     pos: (i32, i32),
 
     y: i32,
+    counter: i32,
+    data: String,
 }
 impl HelloWorldWindow {
     pub fn new(config: Rc<TConfig>) -> Self {
@@ -20,6 +23,8 @@ impl HelloWorldWindow {
             pos: (0, 0),
             size: (15, 15),
             y: 0,
+            counter: 0,
+            data: "".to_string(),
         }
     }
 }
@@ -40,6 +45,13 @@ impl Window for HelloWorldWindow {
             9,
             9,
         );*/
+        grid.write_line(
+            self.data.clone(),
+            self.CONFIG.get("theme_foreground").unwrap().get_color(),
+            self.CONFIG.get("theme_background").unwrap().get_color(),
+            0,
+            10,
+        );
         grid.write_line(
             "Hello, world!".to_string(),
             self.CONFIG.get("theme_foreground").unwrap().get_color(),
@@ -70,16 +82,21 @@ impl Window for HelloWorldWindow {
     }
 
     fn g_name(&self) -> String {
-        "Hello, world! Program".to_string()
+        format!("{}Hello, world! Program", self.counter)
     }
     fn process_key(&mut self, key: crossterm::event::Event) {
+        if let Event::Key(event) = key {
+            self.data = format!("{:?}", event.code);
+        }
         match key {
             Event::Key(KeyEvent {
                 code: KeyCode::Char('j'),
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press,
                 ..
             }) => {
                 self.y += 1;
+                self.counter += 1;
                 if self.y >= self.g_size().1 {
                     self.y = 0;
                 }

@@ -38,10 +38,11 @@ fn main() {
     //going into raw mode
     enable_raw_mode().unwrap();
 
+    let ev = read().unwrap();
+    print!("\x1b[H{}", manager.render());
     loop {
+        let ev = read().unwrap();
+        manager.process_key(ev);
         print!("\x1b[H{}", manager.render());
-
-        let re = read().unwrap();
-        manager.process_key(re);
     }
 }

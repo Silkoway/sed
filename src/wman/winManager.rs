@@ -7,7 +7,7 @@ use super::{
     window::Window,
 };
 
-use crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
+use crossterm::event::{Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 use terminal_size::{terminal_size, Height, Width};
 
 pub struct WindowManager {
@@ -166,7 +166,7 @@ impl WindowManager {
             }) => process::exit(0),
             _ => {
                 if let Some(uuid) = self.selected_window {
-                    let mut window = self.get_selected_window(uuid).unwrap();
+                    let window = self.get_selected_window(uuid).unwrap();
                     window.process_key(ev);
                 }
             }
