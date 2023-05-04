@@ -1,10 +1,9 @@
-
 use std::rc::Rc;
 
 use crossterm::event::{Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 
 use crate::global_data::TConfig;
-use crate::wman::tChar::{CharGrid};
+use crate::wman::tChar::CharGrid;
 use crate::wman::window::Window;
 
 pub struct HelloWorldWindow {
@@ -103,5 +102,9 @@ impl Window for HelloWorldWindow {
             }
             _ => {}
         }
+    }
+
+    fn g_cursor(&self) -> (i32, i32) {
+        (0, 0)
     }
 }

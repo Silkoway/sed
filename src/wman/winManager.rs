@@ -141,6 +141,19 @@ impl WindowManager {
 
         let mut str = grid.to_string();
         str.pop();
+        if let Some(v) = self.selected_window {
+            let cursor_loc = self.get_selected_window(v).unwrap();
+            let window_loc = cursor_loc.g_loc();
+            let cursor_loc = cursor_loc.g_cursor();
+            // adding 2 because col and row number are 1 indexed and window render has an offset of 1
+            let cursor_loc = (
+                cursor_loc.0 + window_loc.0 + 2,
+                cursor_loc.1 + window_loc.1 + 2,
+            );
+            str.push_str(format!("\x1b[{};{}H", cursor_loc.0, cursor_loc.1).as_str());
+        } else {
+            str.push_str("\x1b[H");
+        }
         str
     }
 
